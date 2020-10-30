@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/password/password",
+    "pages/mobile/mobile",
+    "pages/weixin/weixin",
+    "pages/alipay/alipay",
+    "pages/util/util",
+    "pages/email/email",
+    "pages/rbac/rbac"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}
