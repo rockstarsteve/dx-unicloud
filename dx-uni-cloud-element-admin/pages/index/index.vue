@@ -29,6 +29,7 @@
 	import Headers from '@/components/header/header'
 	import Index from '@/components/page/index'
 	import Article from '@/components/page/article'
+	import cookieUtils from '@/common/cookieUtils.js'
 	export default {
 		data() {
 			return {
@@ -47,7 +48,8 @@
 			Article
 		},
 		onLoad() {
-			if (!this.user._id) {
+			const userJson = cookieUtils.getCookie("user")
+			if(!(userJson && JSON.parse(userJson)._id)){
 				uni.redirectTo({
 					url: '../login/login'
 				})
