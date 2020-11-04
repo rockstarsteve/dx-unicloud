@@ -1,12 +1,13 @@
 'use strict';
 const {
-  secret,
-  getVersion
+	getVersion,
+	isLogin
 } = require('hello-common')
 exports.main = async (event, context) => {
-  let version = getVersion()
-  return {
-    secret,
-    version
-  }
+	let login = isLogin(event)
+	if(login=='ok'){
+		return "ok"
+	}else{
+		return 'erro'
+	}
 }

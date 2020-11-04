@@ -3,7 +3,7 @@
 		<view class="content">
 			方法：
 		</view>
-		<input type="text" focus placeholder="自动获得焦点" v-model="input1" />
+		 <input type="text" focus v-model="input1" />
 		<button @click="getCommonMethod">调用公共的函数</button>
 	</view>
 </template>
@@ -19,8 +19,9 @@
 			getCommonMethod(){
 				let _this = this
 				uniCloud.callFunction({
-						name: 'use-common',
+						name: 'server',
 						data: {
+							url: '/login/getList',
 							token: _this.input1
 						}
 					})
