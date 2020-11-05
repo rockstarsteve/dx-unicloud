@@ -1,10 +1,13 @@
 <template>
 	<view>
 		<view class="content">
-			方法：
+			测试：
 		</view>
-		 <input type="text" focus v-model="input1" />
-		<button @click="getCommonMethod">调用公共的函数</button>
+		<input type="text" focus v-model="username" />
+		<input type="text" focus v-model="password" />
+		<button @click="login">登录</button>
+		<input type="text" focus v-model="input1" />
+		<button @click="getCommonMethod">测试函数</button>
 	</view>
 </template>
 
@@ -12,21 +15,47 @@
 	export default {
 		data() {
 			return {
-				input1: '123'
+				input1: '123',
+				username: '',
+				password: ''
 			}
 		},
 		methods: {
-			getCommonMethod(){
+			login(){
 				let _this = this
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
-							url: '/login/getList',
+							url: '/pub/login',
+							username:  _this.username,
+							password: _this.password
+						}
+					})
+					.then(res => {
+						console.log("res:", res)
+						uni.showToast({
+							title: JSON.stringify(res.result),
+							duration: 5000
+						});
+					}, err => {
+						console.log("错误了！！！", err)
+					});
+			},
+			getCommonMethod() {
+				let _this = this
+				uniCloud.callFunction({
+						name: 'server',
+						data: {
+							url: '/login/getLogList',
 							token: _this.input1
 						}
 					})
 					.then(res => {
 						console.log("res:", res)
+						uni.showToast({
+							title: JSON.stringify(res.result),
+							duration: 5000
+						});
 					}, err => {
 						console.log("错误了！！！", err)
 					});
