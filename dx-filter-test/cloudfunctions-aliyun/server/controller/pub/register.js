@@ -1,6 +1,6 @@
 module.exports = {
 	/**
-	 * 用户登录(账号+密码)
+	 * 注册用户(账号+密码)
 	 * @url user/pub/login 前端调用的url参数地址
 	 * @description 用户登录(账号+密码)
 	 * @params {Object} data 请求参数
@@ -22,11 +22,9 @@ module.exports = {
 		let { uid } = data;
 		let res = {};
 		// 业务逻辑开始----------------------------------------------------------- 
-		// 用户登录(账号+密码)
-		res = await uniID.login({
+		// 用户注册(账号+密码)
+		res = await uniID.register({
 			...event.data,
-			// 不指定queryField的情况下只会查询username
-			queryField: ['username', 'email', 'mobile']
 		});
 		if(res.token){
 			// 日志服务

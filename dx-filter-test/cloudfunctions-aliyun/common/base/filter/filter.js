@@ -20,7 +20,6 @@ async function filter(obj) {
 	let param = base.getQueryStringParameters(event);
 	let {
 		url,
-		data,
 		uniIdToken
 	} = param;
 	// 工具包
@@ -33,7 +32,7 @@ async function filter(obj) {
 	};
 	let serviceParam = {
 		url,
-		data,
+		data: param,
 		uniIdToken,
 		util,
 		originalParam
@@ -63,15 +62,14 @@ async function filter(obj) {
 	}
 	// 匹配获取对应的过滤器 业务逻辑结束-----------------------------------------------------------
 	if (res.code !== 0) return res; // code不为0，则直接返回错误信息
-	if (res.uid) data.uid = res.uid; // 如果存在uid，则参数自动加上uid参数
+	if (res.uid) param.uid = res.uid; // 如果存在uid，则参数自动加上uid参数
 	serviceParam.filterResponse = res; // 过滤器返回的数据
 	// 全局过滤器结束 end -----------------------------------------------------------
 
 	// 加载业务函数
 	let serviceMain;
 	try {
-		console.log("获取业务函数路径:", base.require('server/controller' + url))
-		serviceMain = base.require('server/controller/' + url);
+		serviceMain = base.require('controller/' + url);
 	} catch (err) {
 		if (err && err.code == "MODULE_NOT_FOUND") {
 			return {

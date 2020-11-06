@@ -1,0 +1,111 @@
+// 在本文件中可配置云数据库初始化，数据格式见：https://uniapp.dcloud.io/uniCloud/cf-database?id=db_init
+
+// 编写完毕后对本文件点右键，可按配置规则创建表和添加数据
+
+{
+	"uni-id-users": {
+		"data": [{
+			"_id": "001",
+			"username": "test",
+			"password": "test",
+			"register_date": 1595226782567,
+			"register_ip": "1.1.1.1",
+			"token": [],
+			"last_login_date": 1595924590651,
+			"last_login_ip": "1.1.1.1",
+			"nickname": "测试"
+		}],
+		"index": [{
+			"IndexName": "username",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "username",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "mobile",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "mobile",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "email",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "email",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "wx_openid.app-plus",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "wx_openid.app-plus",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "wx_openid.mp-weixin",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "wx_openid.mp-weixin",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "wx_unionid",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "wx_unionid",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "ali_openid",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "ali_openid",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "my_invite_code",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "my_invite_code",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "inviter_uid",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "inviter_uid",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "invite_time",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "invite_time",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}]
+	}
+
+}
