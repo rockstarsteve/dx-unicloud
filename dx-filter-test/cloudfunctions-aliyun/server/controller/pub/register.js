@@ -19,12 +19,12 @@ module.exports = {
 		console.log("evnt:",event);
 		let { data = {}, util, originalParam } = event;
 		let { uniID, config,  base, db, _ } = util;
-		let { uid } = data;
+		let { uid,username,password } = data;
 		let res = {};
 		// 业务逻辑开始----------------------------------------------------------- 
 		// 用户注册(账号+密码)
 		res = await uniID.register({
-			...event.data,
+			username,password
 		});
 		if(res.token){
 			// 日志服务
