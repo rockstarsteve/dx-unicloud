@@ -8,6 +8,7 @@ module.exports = {
 		let res = {code :-1, msg : ''};
     // 业务逻辑开始----------------------------------------------------------- 
 		// 在这里可以自己写自己的检测登陆逻辑
+		console.log("uniIdToken的数据是:",event.uniIdToken);
 		let payload = await uniID.checkToken(event.uniIdToken);
 		if (payload.code && payload.code > 0) {
 			return payload;

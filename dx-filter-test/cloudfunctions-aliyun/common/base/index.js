@@ -38,20 +38,20 @@ base.getQueryStringParameters = function(event) {
 	if (!param.uniIdToken) {
 		param.uniIdToken = "";
 	}
-	console.log("参数param:", param)
+	// console.log("参数param:", param)
 	return param;
 }
 
-// // 初始化
-// const config = base.configFile;
-// const uniID = require('uni-id');
-// uniID.init(config["uni"]);
-// const db = uniCloud.database();
+// 初始化
+const config = base.configFile;
+const uniID = require('uni-id');
+uniID.init(config["uni"]);
+const db = uniCloud.database();
 
-// base.init({
-// 	config,
-// 	uniID,
-// 	db,
-// });
+base.init({
+	config,
+	uniID,
+	db,
+});
 
 module.exports = base;
