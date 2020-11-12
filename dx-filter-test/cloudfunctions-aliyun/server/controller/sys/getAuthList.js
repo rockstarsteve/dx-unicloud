@@ -1,7 +1,6 @@
 
 const logDb = uniCloud.database().collection('log')
 module.exports = {
-	
 	main: async (event) => {
 		console.log("evnt:",event);
 		let res = { code : 0, msg : '' };

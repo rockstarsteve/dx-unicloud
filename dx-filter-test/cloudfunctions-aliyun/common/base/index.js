@@ -33,12 +33,31 @@ base.init = function(obj) {
 // 提取请求参数
 base.getQueryStringParameters = function(event) {
 	let param = {};
-	param = JSON.parse(JSON.stringify(event));
+	
+	if(event.httpMethod){
+		// console.log("event.path:",event.path);
+		// url化方式(http、https)请求
+		if(event.body){
+			let options = event.body;
+			if(event.isBase64Encoded){
+				options = Buffer.from(options, 'base64').toString('utf-8');
+			}
+			if(typeof options == "string") options = JSON.parse(options);
+			param = options;
+		}else if(event.queryStringParameters){
+			let options = event.queryStringParameters;
+			if(typeof options.data == "string") options.data = JSON.parse(options.data);
+			param = options;
+		}
+	}else{
+		// 普通云函数请求
+		param = JSON.parse(JSON.stringify(event));
+	}
 	param.url = param.url || "";
 	if (!param.uniIdToken) {
 		param.uniIdToken = "";
 	}
-	// console.log("参数param:", param)
+	console.log("参数param:", param)
 	return param;
 }
 

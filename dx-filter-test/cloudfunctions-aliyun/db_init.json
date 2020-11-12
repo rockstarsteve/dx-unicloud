@@ -7,13 +7,14 @@
 		"data": [{
 			"_id": "001",
 			"username": "test",
-			"password": "test",
+			"password": "32be6037db06f3581f0acffebe88155c75329a41",
 			"register_date": 1595226782567,
 			"register_ip": "1.1.1.1",
 			"token": [],
 			"last_login_date": 1595924590651,
 			"last_login_ip": "1.1.1.1",
-			"nickname": "测试"
+			"nickname": "测试",
+			"allow_login_background": "true"
 		}],
 		"index": [{
 			"IndexName": "username",
@@ -106,6 +107,150 @@
 				"MgoIsUnique": false
 			}
 		}]
+	},
+	"uni-verify": {
+		"data": [],
+		"index": [{
+			"IndexName": "mobile",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "mobile",
+					"Direction": "1"
+				}, {
+					"Name": "code",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "email",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "email",
+					"Direction": "1"
+				}, {
+					"Name": "code",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}]
+	},
+	"opendb-components-dynamic": {
+		"data": [],
+		"index": [{
+				"IndexName": "data_id",
+				"MgoKeySchema": {
+					"MgoIndexKeys": [{
+						"Name": "data_id",
+						"Direction": "1"
+					}],
+					"MgoIsUnique": false
+				}
+			},
+			{
+				"IndexName": "title",
+				"MgoKeySchema": {
+					"MgoIndexKeys": [{
+						"Name": "title",
+						"Direction": "1"
+					}],
+					"MgoIsUnique": false
+				}
+			}
+		]
+	},
+	"uni-id-log": {
+		"data": [],
+		"index": [{
+			"IndexName": "user_id",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "user_id",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}]
+	},
+	"uni-id-roles": {
+		"data": [],
+		"index": [{
+				"IndexName": "role_id",
+				"MgoKeySchema": {
+					"MgoIndexKeys": [{
+						"Name": "role_id",
+						"Direction": "1"
+					}],
+					"MgoIsUnique": true
+				}
+			},
+			{
+				"IndexName": "permission",
+				"MgoKeySchema": {
+					"MgoIndexKeys": [{
+						"Name": "permission",
+						"Direction": "1"
+					}],
+					"MgoIsUnique": false
+				}
+			},
+			{
+				"IndexName": "name",
+				"MgoKeySchema": {
+					"MgoIndexKeys": [{
+						"Name": "name",
+						"Direction": "1"
+					}],
+					"MgoIsUnique": false
+				}
+			}
+		]
+	},
+	"uni-id-permissions": {
+		"data": [],
+		"index": [{
+				"IndexName": "permission_id",
+				"MgoKeySchema": {
+					"MgoIndexKeys": [{
+						"Name": "permission_id",
+						"Direction": "1"
+					}],
+					"MgoIsUnique": true
+				}
+			},
+			{
+				"IndexName": "url",
+				"MgoKeySchema": {
+					"MgoIndexKeys": [{
+						"Name": "url",
+						"Direction": "1"
+					}],
+					"MgoIsUnique": false
+				}
+			},
+			{
+				"IndexName": "parent_id",
+				"MgoKeySchema": {
+					"MgoIndexKeys": [{
+						"Name": "parent_id",
+						"Direction": "1"
+					}],
+					"MgoIsUnique": false
+				}
+			},
+			{
+				"IndexName": "sort",
+				"MgoKeySchema": {
+					"MgoIndexKeys": [{
+						"Name": "sort",
+						"Direction": "1"
+					}],
+					"MgoIsUnique": false
+				}
+			}
+		]
 	}
+
 
 }
