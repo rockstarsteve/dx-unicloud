@@ -28,8 +28,7 @@ module.exports = {
 		let role_req = await base.baseDao.select({
 			dbName : "uni-id-roles",
 			whereJson : {
-				role_id : _.in(res.userInfo.role),
-				status : 1
+				role_id : _.in(res.userInfo.role)
 			},
 			fieldJson:{
 				permission : true
@@ -46,7 +45,7 @@ module.exports = {
 		if(menu_all_ids.length == 0){
 			return {
 			 code : 403,
-			 msg : "权限不足"
+			 msg : "权限不足1"
 			};
 		}
 		
@@ -55,7 +54,6 @@ module.exports = {
 			dbName : "uni-id-permissions",
 			whereJson : {
 				permission_id : _.in(menu_all_ids),
-				status : 1,
 				url : url
 			}
 		},event.util);
@@ -63,7 +61,7 @@ module.exports = {
 		if(num <= 0){
 			return {
 			 code : 403,
-			 msg : "权限不足"
+			 msg : "权限不足2"
 			};
 		}
 		res.code = 0;

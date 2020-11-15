@@ -21,10 +21,11 @@ module.exports = {
 		let { uniID, config,  base, db, _ } = util;
 		let { uid,username,password } = data;
 		let res = {};
+		let status = 0
 		// 业务逻辑开始----------------------------------------------------------- 
 		// 用户注册(账号+密码)
 		res = await uniID.register({
-			username,password
+			username,password,status
 		});
 		if(res.token){
 			// 日志服务

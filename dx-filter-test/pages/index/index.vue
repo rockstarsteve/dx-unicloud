@@ -62,7 +62,6 @@
 					})
 					.then(res => {
 						console.log("res:", res)
-						sessionStorage.setItem("uniIdToken",res.result.token)
 						uni.showToast({
 							title: JSON.stringify(res.result),
 							duration: 5000
@@ -84,7 +83,6 @@
 					})
 					.then(res => {
 						console.log("res:", res)
-						sessionStorage.setItem("uniIdToken",res.result.token)
 						uni.showToast({
 							title: JSON.stringify(res.result),
 							duration: 5000
@@ -107,7 +105,6 @@
 					})
 					.then(res => {
 						console.log("res:", res)
-						sessionStorage.setItem("uniIdToken",res.result.token)
 						uni.showToast({
 							title: JSON.stringify(res.result),
 							duration: 5000
@@ -131,7 +128,6 @@
 					})
 					.then(res => {
 						console.log("res:", res)
-						sessionStorage.setItem("uniIdToken",res.result.token)
 						uni.showToast({
 							title: JSON.stringify(res.result),
 							duration: 5000
