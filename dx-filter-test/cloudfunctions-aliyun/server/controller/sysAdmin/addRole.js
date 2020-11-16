@@ -1,12 +1,9 @@
-
-const logDb = uniCloud.database().collection('log')
+const uniID = require('uni-id')
 module.exports = {
 	main: async (event) => {
-		let { data = {}, util, originalParam } = event;
-		let { uniID, config,  base, db, _ } = util;
-		let res = { code : 0, msg : 'ok' };
+		let { data = {}, originalParam } = event;
+		let res = { code : 0, msg : '调用成功' };
 		// 业务逻辑开始----------------------------------------------------------- 
-		// 可写与数据库的交互逻辑等等
 		let param = {}
 		param.roleID = data.roleID
 		param.roleName = data.roleName

@@ -1,14 +1,12 @@
+const uniID = require('uni-id')
 module.exports = {
   /**
    * 检测客户端用户是否已登陆
    */
   main: async (event) => {
-		let {uniID} = event.util;
 		let {token} = event;
-		let res = {code :-1, msg : ''};
+		let res = {code :-1, msg : '无权限'};
     // 业务逻辑开始----------------------------------------------------------- 
-		// 在这里可以自己写自己的检测登陆逻辑
-		console.log("uniIdToken的数据是:",event.uniIdToken);
 		let payload = await uniID.checkToken(event.uniIdToken);
 		if (payload.code && payload.code > 0) {
 			return payload;
@@ -25,7 +23,7 @@ module.exports = {
 			res.tokenExpired = payload.tokenExpired;
 		}
 		res.code = 0;
-		res.msg = 'ok';
+		res.msg = '调用成功';
     // 业务逻辑结束-----------------------------------------------------------
     return res;
   }

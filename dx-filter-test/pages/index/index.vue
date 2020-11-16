@@ -1,31 +1,31 @@
 <template>
 	<view>
-		用户名 <input type="text" focus v-model="username" />
-		密码 <input type="text" focus v-model="password" />
+		<view class="input-line">用户名： <input type="text" focus v-model="username" /></view>
+		<view class="input-line">密码： <input type="text" focus v-model="password" /></view>
 		<button @click="register">注册</button>
 		<button @click="login">登录</button>
-		参数： <input type="text" focus v-model="input1" />
+		<view class="input-line">请求参数： <input type="text" focus v-model="requestData" /></view>
 		<button @click="getCommonMethod">普通访问函数</button>
 		<button @click="getLoginCommonMethod">测试登录后带token访问的函数</button>
 		<button @click="getAuthCommonMethod">测试后台登录后带token访问的函数</button>
-		
-		角色Id，唯一标识 <input type="text" focus v-model="roleID" />
-		角色名称，展示用  <input type="text" focus v-model="roleName" />
-		备注 <input type="text" focus v-model="comment" />
-		权限Id（permission_id）列表  <input type="text" focus v-model="permission[0]" />
+
+		<view class="input-line">角色Id，唯一标识： <input type="text" focus v-model="roleID" /></view>
+		<view class="input-line">角色名称，展示用 ：<input type="text" focus v-model="roleName" /></view>
+		<view class="input-line">备注： <input type="text" focus v-model="comment" /></view>
+		<view class="input-line">权限Id（permission_id）列表： <input type="text" focus v-model="permission[0]" /></view>
 		<button @click="addRole">新增角色</button>
-		
-		权限Id，唯一标识 <input type="text" focus v-model="permissionID" />
-		权限名称，展示用  <input type="text" focus v-model="permissionName" />
-		备注 <input type="text" focus v-model="comment" />
+
+		<view class="input-line">权限Id，唯一标识： <input type="text" focus v-model="permissionID" /></view>
+		<view class="input-line">权限名称，展示用： <input type="text" focus v-model="permissionName" /></view>
+		<view class="input-line">备注： <input type="text" focus v-model="comment" /></view>
 		<button @click="addPermission">新增权限</button>
-		
-		绑定用户的id <input type="text" focus v-model="userId" />
-		角色  <input type="text" focus v-model="roleList[0]" />
+
+		<view class="input-line">绑定用户的id： <input type="text" focus v-model="userId" /></view>
+		<view class="input-line">角色： <input type="text" focus v-model="roleList[0]" /></view>
 		<button @click="bindRole">为用户绑定角色</button>
-		
-		用户Id <input type="text" focus v-model="roleID" />
-		权限Id（permission_id）列表  <input type="text" focus v-model="permissionList[0]" />
+
+		<view class="input-line">用户Id： <input type="text" focus v-model="roleID" /></view>
+		<view class="input-line">权限Id（permission_id）列表： <input type="text" focus v-model="permissionList[0]" /></view>
 		<button @click="bindPermission">为角色绑定权限</button>
 	</view>
 </template>
@@ -34,7 +34,7 @@
 	export default {
 		data() {
 			return {
-				input1: '123',
+				requestData: '',
 				username: '',
 				password: '',
 				roleID: '',
@@ -49,58 +49,58 @@
 			}
 		},
 		methods: {
-			bindPermission(){
+			bindPermission() {
 				let _this = this
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
 							uniIdToken: sessionStorage.getItem("uniIdToken"),
-							url: '/login/bindPermission',
-							roleID:  _this.roleID,
+							url: '/sysAdmin/bindPermission',
+							roleID: _this.roleID,
 							permissionList: _this.permissionList
 						}
 					})
 					.then(res => {
 						console.log("res:", res)
 						uni.showToast({
-							title: JSON.stringify(res.result),
+							title: JSON.stringify(res.result.msg),
 							duration: 5000
 						});
 					}, err => {
 						console.log("错误了！！！", err)
 					});
 			},
-			bindRole(){
+			bindRole() {
 				let _this = this
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
 							uniIdToken: sessionStorage.getItem("uniIdToken"),
-							url: '/login/bindRole',
-							userId:  _this.userId,
+							url: '/sysAdmin/bindRole',
+							userId: _this.userId,
 							roleList: _this.roleList
 						}
 					})
 					.then(res => {
 						console.log("res:", res)
 						uni.showToast({
-							title: JSON.stringify(res.result),
+							title: JSON.stringify(res.result.msg),
 							duration: 5000
 						});
 					}, err => {
 						console.log("错误了！！！", err)
 					});
 			},
-			addPermission(){
+			addPermission() {
 				let _this = this
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
 							uniIdToken: sessionStorage.getItem("uniIdToken"),
-							url: '/login/addPermission',
+							url: '/sysAdmin/addPermission',
 							permissionID: _this.permissionID,
 							permissionName: _this.permissionName,
-							comment:  _this.comment,
+							comment: _this.comment,
 						}
 					})
 					.then(res => {
@@ -113,65 +113,65 @@
 						console.log("错误了！！！", err)
 					});
 			},
-			addRole(){
+			addRole() {
 				let _this = this
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
 							uniIdToken: sessionStorage.getItem("uniIdToken"),
-							url: '/login/addRole',
-							roleID:  _this.roleID,
+							url: '/sysAdmin/addRole',
+							roleID: _this.roleID,
 							roleName: _this.roleName,
-							comment:  _this.comment,
+							comment: _this.comment,
 							permission: _this.permission
 						}
 					})
 					.then(res => {
 						console.log("res:", res)
 						uni.showToast({
-							title: JSON.stringify(res.result),
+							title: JSON.stringify(res.result.msg),
 							duration: 5000
 						});
 					}, err => {
 						console.log("错误了！！！", err)
 					});
 			},
-			register(){
+			register() {
 				let _this = this
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
 							url: '/pub/register',
-							username:  _this.username,
+							username: _this.username,
 							password: _this.password
 						}
 					})
 					.then(res => {
 						console.log("res:", res)
-						sessionStorage.setItem("uniIdToken",res.result.token)
+						sessionStorage.setItem("uniIdToken", res.result.token)
 						uni.showToast({
-							title: JSON.stringify(res.result),
+							title: JSON.stringify(res.result.msg),
 							duration: 5000
 						});
 					}, err => {
 						console.log("错误了！！！", err)
 					});
 			},
-			login(){
+			login() {
 				let _this = this
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
 							url: '/pub/login',
-							username:  _this.username,
+							username: _this.username,
 							password: _this.password
 						}
 					})
 					.then(res => {
 						console.log("res:", res)
-						sessionStorage.setItem("uniIdToken",res.result.token)
+						sessionStorage.setItem("uniIdToken", res.result.token)
 						uni.showToast({
-							title: JSON.stringify(res.result),
+							title: JSON.stringify(res.result.msg),
 							duration: 5000
 						});
 					}, err => {
@@ -184,14 +184,13 @@
 						name: 'server',
 						data: {
 							uniIdToken: sessionStorage.getItem("uniIdToken"),
-							url: '/login/getLogList',
-							input1: _this.input1
+							url: '/sysAdmin/getLogList'
 						}
 					})
 					.then(res => {
 						console.log("res:", res)
 						uni.showToast({
-							title: JSON.stringify(res.result),
+							title: JSON.stringify(res.result.msg),
 							duration: 5000
 						});
 					}, err => {
@@ -203,14 +202,13 @@
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
-							url: '/pub/getList',
-							input1: _this.input1
+							url: '/pub/getList'
 						}
 					})
 					.then(res => {
 						console.log("res:", res)
 						uni.showToast({
-							title: JSON.stringify(res.result),
+							title: JSON.stringify(res.result.msg),
 							duration: 5000
 						});
 					}, err => {
@@ -223,25 +221,26 @@
 						name: 'server',
 						data: {
 							uniIdToken: sessionStorage.getItem("uniIdToken"),
-							url: '/sys/getAuthList',
-							input1: _this.input1
+							url: '/sys/getAuthList'
 						}
 					})
 					.then(res => {
 						console.log("res:", res)
 						uni.showToast({
-							title: JSON.stringify(res.result),
+							title: JSON.stringify(res.result.msg),
 							duration: 5000
 						});
 					}, err => {
 						console.log("错误了！！！", err)
 					});
 			}
-			
+
 		}
 	}
 </script>
 
-<style>
-
+<style scoped>
+	.input-line {
+		display: flex;
+	}
 </style>

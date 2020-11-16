@@ -1,18 +1,14 @@
 'use strict';
 process.env.TZ = 'Asia/Shanghai'; // 设置时区为东八区(目前无效)
 const filterService = require(__dirname + '/filterService');
+const logDb = uniCloud.database().collection('log')
 
-async function filter(obj) {
+async function filter(content) {
 	let {
 		event,
 		context,
 		base
-	} = obj;
-	let {
-		config,
-		uniID,
-		db,
-	} = base.config;
+	} = content;
 	let originalParam = {
 		event,
 		context
@@ -22,28 +18,24 @@ async function filter(obj) {
 		url,
 		uniIdToken
 	} = param;
-	// 工具包
-	let util = {
-		base,
-		config,
-		uniID,
-		db,
-		_: db.command
-	};
 	let serviceParam = {
 		url,
 		data: param,
 		uniIdToken,
-		util,
 		originalParam
 	};
+	//记录日志========================================================================
+	await logDb.add({
+		param
+	})
+	
 	// 全局过滤器开始  start	-----------------------------------------------------------
 	let res = {
 		code: 403,
 		msg: 'access denied',
 		filterStack: []
 	};
-	// TODO 需要测试 匹配获取对应的过滤器 业务逻辑开始-----------------------------------------------------------
+	// 需要测试 匹配获取对应的过滤器 业务逻辑开始-----------------------------------------------------------
 	for (let i in filterService) {
 		let filterItem = filterService[i];
 		let regExp = new RegExp(filterItem.regExp);
@@ -62,8 +54,8 @@ async function filter(obj) {
 	}
 	// 匹配获取对应的过滤器 业务逻辑结束-----------------------------------------------------------
 	if (res.code !== 0) return res; // code不为0，则直接返回错误信息
-	if (res.uid) param.uid = res.uid; // 如果存在uid，则参数自动加上uid参数
-	serviceParam.filterResponse = res; // 过滤器返回的数据
+	// if (res.uid) param.uid = res.uid; // 如果存在uid，则参数自动加上uid参数
+	serviceParam.filterResponse = res; // 过滤器返回的数据 过滤器返回的数据
 	// 全局过滤器结束 end -----------------------------------------------------------
 
 	// 加载业务函数
@@ -101,12 +93,12 @@ async function serviceRun(obj = {}) {
 		serviceParam,
 		serviceMain
 	} = obj;
-	if (res.uid) {
-		serviceParam.uid = res.uid;
-	}
-	if (res.userInfo) {
-		serviceParam.userInfo = res.userInfo;
-	}
+	// if (res.uid) {
+	// 	serviceParam.uid = res.uid;
+	// }
+	// if (res.userInfo) {
+	// 	serviceParam.userInfo = res.userInfo;
+	// }
 	let returnRes = await serviceMain.main(serviceParam);
 	if (res.token && typeof returnRes == "object") {
 		returnRes.base_uni_token = {

@@ -3,11 +3,7 @@
  */
 var base = {};
 // 路由入口函数
-base.configFile = require(__dirname + '/config');
-// 路由入口函数
 base.filter = require(__dirname + '/filter/filter');
-// 数据库baseDao API
-base.baseDao = require(__dirname + '/util/vk-base-dao');
 
 // 用于存放require缓存
 base.requireCache = {};
@@ -22,34 +18,25 @@ base.require = function(path) {
 	}
 }
 
-// 配置
-base.config = {};
-base.init = function(obj) {
-	base.config.config = obj.config;
-	base.config.uniID = obj.uniID;
-	base.config.db = obj.db;
-};
-
 // 提取请求参数
 base.getQueryStringParameters = function(event) {
 	let param = {};
-	
-	if(event.httpMethod){
-		// console.log("event.path:",event.path);
+
+	if (event.httpMethod) {
 		// url化方式(http、https)请求
-		if(event.body){
+		if (event.body) {
 			let options = event.body;
-			if(event.isBase64Encoded){
+			if (event.isBase64Encoded) {
 				options = Buffer.from(options, 'base64').toString('utf-8');
 			}
-			if(typeof options == "string") options = JSON.parse(options);
+			if (typeof options == "string") options = JSON.parse(options);
 			param = options;
-		}else if(event.queryStringParameters){
+		} else if (event.queryStringParameters) {
 			let options = event.queryStringParameters;
-			if(typeof options.data == "string") options.data = JSON.parse(options.data);
+			if (typeof options.data == "string") options.data = JSON.parse(options.data);
 			param = options;
 		}
-	}else{
+	} else {
 		// 普通云函数请求
 		param = JSON.parse(JSON.stringify(event));
 	}
@@ -57,20 +44,8 @@ base.getQueryStringParameters = function(event) {
 	if (!param.uniIdToken) {
 		param.uniIdToken = "";
 	}
-	console.log("参数param:", param)
+	// console.log("参数param:", param)
 	return param;
 }
-
-// 初始化
-const config = base.configFile;
-const uniID = require('uni-id');
-uniID.init(config["uni"]);
-const db = uniCloud.database();
-
-base.init({
-	config,
-	uniID,
-	db,
-});
 
 module.exports = base;

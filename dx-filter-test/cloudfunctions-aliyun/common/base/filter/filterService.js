@@ -3,6 +3,7 @@
  */
 const checkIsLoginService = require(__dirname + '/checkIsLogin');
 const checkSysAuthService = require(__dirname + '/checkSysAuth');
+const checkSysAdminService = require(__dirname + '/checkSysAdmin');
 
 module.exports = [{
 		id: "pub",
@@ -29,10 +30,17 @@ module.exports = [{
 		main: checkIsLoginService.main
 	},
 	{
-		id: "sys",
-		regExp: "/sys/",
-		description: "sys函数为后端管理人员才能访问的函数(商家后台工作人员)",
+		id: "sysAdmin",
+		regExp: "/sysAdmin/",
+		description: "sysAdmin函数为后端管理人员才能访问的函数",
 		index: 300,
 		main: checkSysAuthService.main
-	}
+	},
+	{
+		id: "sys",
+		regExp: "/sys/",
+		description: "sys函数为后端管理人员且存在对应权限才能访问的函数",
+		index: 400,
+		main: checkSysAuthService.main
+	},
 ]
