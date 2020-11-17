@@ -11,11 +11,12 @@
 		</el-aside>
 		<el-container>
 			<el-header>
-				<headers :user="user" :isCollapse="isCollapse" />
+				<headers :uniIdToken="uniIdToken" :isCollapse="isCollapse" />
 			</el-header>
 			<el-main>
 				<Index v-if="currentPage === 'index'" />
 				<Article v-if="currentPage === 'articleList'" />
+				<SysManage v-if="currentPage === 'sys-manage'" />
 			</el-main>
 		</el-container>
 	</el-container>
@@ -29,7 +30,7 @@
 	import Headers from '@/components/header/header'
 	import Index from '@/components/page/index'
 	import Article from '@/components/page/article'
-	import cookieUtils from '@/common/cookieUtils.js'
+	import SysManage from '@/components/page/sys-manage'
 	export default {
 		data() {
 			return {
@@ -39,17 +40,18 @@
 			}
 		},
 		computed: {
-			...mapState(['user', 'isCollapse'])
+			...mapState(['uniIdToken', 'isCollapse'])
 		},
 		components: {
 			Menus,
 			Headers,
 			Index,
-			Article
+			Article,
+			SysManage
 		},
 		onLoad() {
-			const userJson = cookieUtils.getCookie("user")
-			if(!(userJson && JSON.parse(userJson)._id)){
+			const uniIdToken = sessionStorage.getItem("uniIdToken")
+			if (!uniIdToken) {
 				uni.redirectTo({
 					url: '../login/login'
 				})
@@ -74,7 +76,7 @@
 			height: 100%;
 
 			.el-main {
-				height: 100%;
+				height: calc(100vh-60px);
 			}
 		}
 
@@ -111,7 +113,8 @@
 				vertical-align: middle;
 				margin-left: 12px;
 			}
-			.sidebar-logo-img{
+
+			.sidebar-logo-img {
 				width: 32px;
 				height: 32px;
 				vertical-align: middle;

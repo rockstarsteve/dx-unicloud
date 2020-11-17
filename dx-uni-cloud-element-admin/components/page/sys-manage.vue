@@ -1,9 +1,12 @@
 <template>
 	<view>
+		<view class="" style="color: red;">
+			没有做管理员的判断，任意用户都能注册用户，请不要随意使用！
+		</view>
 		<view class="input-line">用户名： <input type="text" focus v-model="username" /></view>
 		<view class="input-line">密码： <input type="text" focus v-model="password" /></view>
 		<button @click="register">注册</button>
-		<button @click="login">登录</button>
+		<button @click="login">模拟看是否能登录</button>
 		<view class="input-line">请求参数： <input type="text" focus v-model="requestData" /></view>
 		<button @click="getCommonMethod">普通访问函数</button>
 		<button @click="getLoginCommonMethod">测试登录后带token访问的函数</button>
@@ -169,7 +172,7 @@
 					})
 					.then(res => {
 						console.log("res:", res)
-						sessionStorage.setItem("uniIdToken", res.result.token)
+						// sessionStorage.setItem("uniIdToken", res.result.token)
 						uni.showToast({
 							title: JSON.stringify(res.result.msg),
 							duration: 5000
@@ -221,7 +224,7 @@
 						name: 'server',
 						data: {
 							uniIdToken: sessionStorage.getItem("uniIdToken"),
-							url: '/admin/getAuthList'
+							url: '/sys/getAuthList'
 						}
 					})
 					.then(res => {
@@ -239,7 +242,10 @@
 	}
 </script>
 
-<style scoped>
+
+<style lang="less" scoped>
+	.console {}
+
 	.input-line {
 		display: flex;
 	}

@@ -192,19 +192,27 @@
 			},
 			getList() {
 				this.loading = true
+				let _this = this
 				uniCloud.callFunction({
-					name: "getArticleList",
-					data: {
-						page: this.currentPage,
-						limit: this.limit
-					}
-				}).then((res) => {
-					if (res.success) {
+						name: 'server',
+						data: {
+							uniIdToken: sessionStorage.getItem("uniIdToken"),
+							url: '/sys/getArticleList',
+							page: this.currentPage,
+							limit: this.limit
+						}
+					})
+					.then(res => {
+						console.log("res:", res)
 						this.loading = false
-						this.total = res.result.total
-						this.list = res.result.data
-					}
-				})
+						_this.total = res.result.data.total
+						_this.list = res.result.data.data
+					}, err => {
+						uni.showToast({
+							title: '调用失败',
+							duration: 3000
+						});
+					});
 			},
 			// 翻页
 			handleCurrentChange(val) {
@@ -226,22 +234,30 @@
 					type: 'warning'
 				}).then(() => {
 					uniCloud.callFunction({
-						name: "updateArticle",
-						data: {
-							id: type === 'one' ? id : this.checkedIds,
-							delete_date: new Date().toLocaleDateString()
-						}
-					}).then((res) => {
-						this.$message({
-							type: 'success',
-							message: '删除成功',
-							duration: 800,
-							offset: 200,
-							onClose: () => {
-								this.getList()
+							name: 'server',
+							data: {
+								uniIdToken: sessionStorage.getItem("uniIdToken"),
+								url: '/sys/article/updateArticle',
+								id: type === 'one' ? id : this.checkedIds,
+								delete_date: new Date().toLocaleDateString()
 							}
 						})
-					})
+						.then(res => {
+							this.$message({
+								type: 'success',
+								message: '删除成功',
+								duration: 800,
+								offset: 200,
+								onClose: () => {
+									this.getList()
+								}
+							})
+						}, err => {
+							uni.showToast({
+								title: '调用失败',
+								duration: 3000
+							});
+						});
 				}).catch(() => {
 					// 取消
 				})
@@ -260,19 +276,28 @@
 						...article
 					}
 					this.uploading = true
+
 					uniCloud.callFunction({
-						name: "getArticle",
-						data: {
-							id: article._id
-						}
-					}).then((res) => {
-						this.editorCtx.setContents({
-							html: res.result.data[0].content,
-							complete: () => {
-								this.uploading = false
+							name: 'server',
+							data: {
+								uniIdToken: sessionStorage.getItem("uniIdToken"),
+								url: '/sys/article/getArticle',
+								id: article._id
 							}
 						})
-					})
+						.then(res => {
+							this.editorCtx.setContents({
+								html: res.result.data.data[0].content,
+								complete: () => {
+									this.uploading = false
+								}
+							})
+						}, err => {
+							uni.showToast({
+								title: '调用失败',
+								duration: 3000
+							});
+						});
 				}
 				this.articleFormVisible = true
 			},
@@ -341,23 +366,32 @@
 							} else {
 								article.create_date = new Date().toLocaleString()
 							}
+
 							uniCloud.callFunction({
-								name: url,
-								data: {
-									...article,
-									delete_date: '0',
-									content: res.html
-								}
-							}).then((res) => {
-								that.uploading = false
-								that.articleFormVisible = false
-								that.getList()
-								this.$message({
-									showClose: true,
-									message: '操作成功',
-									type: 'success'
+									name: 'server',
+									data: {
+										uniIdToken: sessionStorage.getItem("uniIdToken"),
+										url: '/sys/article/' + url,
+										...article,
+										delete_date: '0',
+										content: res.html
+									}
 								})
-							})
+								.then(res => {
+									that.uploading = false
+									that.articleFormVisible = false
+									that.getList()
+									this.$message({
+										showClose: true,
+										message: '操作成功',
+										type: 'success'
+									})
+								}, err => {
+									uni.showToast({
+										title: '调用失败',
+										duration: 3000
+									});
+								});
 						}
 					}
 				})
@@ -383,7 +417,6 @@
 		font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 		margin-top: 5px;
 	}
-
 
 	.ql-container {
 		box-sizing: border-box;

@@ -21,7 +21,14 @@
 
 <script>
 	export default {
-		props: ['isCollapse', 'user'],
+		props: ['isCollapse', 'uniIdToken'],
+		data() {
+			return {
+				user: {
+					username: "admin"
+				}
+			}
+		},
 		methods: {
 			collapse() {
 				this.$store.commit('changeCollapse')
@@ -35,7 +42,13 @@
 						})
 						break
 				}
+			},
+			getUserByToken() {
+
 			}
+		},
+		mounted() {
+
 		}
 	}
 </script>

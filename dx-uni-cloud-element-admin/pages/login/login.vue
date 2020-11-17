@@ -49,14 +49,20 @@
 					if (valid) {
 						this.loading = true
 						uniCloud.callFunction({
-							name: "login",
-							data: this.loginForm
+							name: 'server',
+							data: {
+								url: '/pub/login',
+								username: this.loginForm.username,
+								password: this.loginForm.password
+							}
 						}).then((res) => {
-							var res = res.result
-							if (res.status === 1) {
-								this.$store.commit('login', res.data)
+							console.log("res:",res)
+							let sysRest = res.result
+							if (sysRest.code === 0) {
+								console.log("sysRest：",sysRest);
+								this.$store.commit('login', sysRest.token)
 								this.$message({
-									message: res.msg,
+									message: sysRest.msg,
 									type: 'success',
 									duration: 1000,
 									onClose: () => {
@@ -69,7 +75,7 @@
 								this.loading = false
 								this.$message({
 									showClose: true,
-									message: res.msg,
+									message: sysRest.msg,
 									type: 'warning',
 									duration: 1000
 								})

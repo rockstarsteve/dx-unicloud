@@ -4,23 +4,20 @@ Vue.use(Vuex)
 
 import cookieUtils from '../common/cookieUtils.js'
 
-// let user = uni.getStorageSync('user') || {}
-let user = cookieUtils.getCookie('user') || {}
+let uniIdToken = sessionStorage.getItem("uniIdToken")
 const store = new Vuex.Store({
 	state: {
-		user: user,
+		uniIdToken: uniIdToken,
 		isCollapse: false
 	},
 	mutations: {
-		login(state, user) {
-			state.user = user
-			// uni.setStorageSync('user', user)
-			cookieUtils.addCookie('user',user)
+		login(state, uniIdToken) {
+			state.uniIdToken = uniIdToken
+			sessionStorage.setItem('uniIdToken',uniIdToken)
 		},
 		logout(state) {
-			state.user = {}
-			// uni.removeStorageSync('user')
-			cookieUtils.delCookie('user')
+			state.uniIdToken = {}
+			sessionStorage.removeItem('uniIdToken')
 		},
 		changeCollapse(state) {
 			state.isCollapse = !state.isCollapse

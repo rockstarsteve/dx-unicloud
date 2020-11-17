@@ -26,6 +26,15 @@
 						icon: 'el-icon-s-home'
 					},
 					{
+						name: '系统管理',
+						index: 'sys',
+						icon: 'el-icon-s-tools',
+						children: [{
+							name: '系统内容管理',
+							index: 'sys-manage'
+						}]
+					},
+					{
 						name: '文章管理',
 						index: 'article',
 						icon: 'el-icon-document-copy',
@@ -39,6 +48,7 @@
 		},
 		methods: {
 			openPage(page) {
+				console.log("提交内容是page：",page);
 				this.$emit('openPage', page)
 			}
 		}
