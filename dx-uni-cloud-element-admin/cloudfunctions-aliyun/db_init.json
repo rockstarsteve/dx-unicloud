@@ -1,10 +1,6 @@
 {
 	"admin": {
-		"data": [ // 数据
-			{
-				"password": "123456",
-				"username": "admin"
-			}
+		"data": [
 		],
 		"index": [{ // 索引
 			"IndexName": "username", // 索引名称

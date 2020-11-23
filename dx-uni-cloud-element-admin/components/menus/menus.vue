@@ -48,7 +48,8 @@
 		},
 		methods: {
 			openPage(page) {
-				console.log("提交内容是page：",page);
+				// TODO 判断用户是否还有效
+						
 				this.$emit('openPage', page)
 			}
 		}

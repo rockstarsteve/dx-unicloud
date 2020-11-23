@@ -3,12 +3,12 @@
 		<el-form :model="loginForm" :rules="rules" ref="loginForm" class="login-form">
 			<h3 class="title">系 统 登 录</h3>
 			<el-form-item prop="username">
-				<el-input v-model="loginForm.username" autocomplete="off" placeholder="账 号: admin" prefix-icon="el-icon-user">
+				<el-input v-model="loginForm.username" autocomplete="off" placeholder="账 号" prefix-icon="el-icon-user">
 				</el-input>
 			</el-form-item>
 			<el-form-item prop="password">
 				<el-input :type="textType" v-model="loginForm.password" @keyup.native.enter="login('loginForm')" autocomplete="off"
-				 placeholder="密 码: 123456" prefix-icon="el-icon-key">
+				 placeholder="密 码" prefix-icon="el-icon-key">
 					<i slot="suffix" class="el-input__icon el-icon-view btn-eye" @click="changeType"></i>
 				</el-input>
 			</el-form-item>
@@ -51,7 +51,7 @@
 						uniCloud.callFunction({
 							name: 'server',
 							data: {
-								url: '/pub/login',
+								url: '/pub/sysLogin',
 								username: this.loginForm.username,
 								password: this.loginForm.password
 							}

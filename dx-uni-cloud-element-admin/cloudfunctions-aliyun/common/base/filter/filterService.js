@@ -1,9 +1,9 @@
 /**
  * VK框架默认过滤器
  */
-const checkIsLoginService = require(__dirname + '/checkIsLogin');
+const checkLoginService = require(__dirname + '/checkLogin');
 const checkAdminService = require(__dirname + '/checkAdmin');
-const checkSysnService = require(__dirname + '/checkSysn');
+const checkSysnService = require(__dirname + '/checkSys');
 
 module.exports = [{
 		id: "pub",
@@ -27,7 +27,7 @@ module.exports = [{
 		regExp: "/login/",
 		description: "login函数为必须登录后才能访问的函数(客户端用户)",
 		index: 200,
-		main: checkIsLoginService.main
+		main: checkLoginService.main
 	},
 	{
 		id: "sys",

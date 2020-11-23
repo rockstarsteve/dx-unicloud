@@ -6,11 +6,12 @@
 		<view class="input-line">用户名： <input type="text" focus v-model="username" /></view>
 		<view class="input-line">密码： <input type="text" focus v-model="password" /></view>
 		<button @click="register">注册</button>
-		<button @click="login">模拟看是否能登录</button>
+		<button @click="login">登录当前页面用户</button>
 		<view class="input-line">请求参数： <input type="text" focus v-model="requestData" /></view>
 		<button @click="getCommonMethod">普通访问函数</button>
 		<button @click="getLoginCommonMethod">测试登录后带token访问的函数</button>
-		<button @click="getAuthCommonMethod">测试后台登录后带token访问的函数</button>
+		<button @click="getSysLoginCommonMethod">测试后台登录后带token访问的函数</button>
+		<button @click="getAuthCommonMethod">测试后台登录含有权限后带token访问的函数</button>
 
 		<view class="input-line">角色Id，唯一标识： <input type="text" focus v-model="roleID" /></view>
 		<view class="input-line">角色名称，展示用 ：<input type="text" focus v-model="roleName" /></view>
@@ -57,7 +58,7 @@
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
-							uniIdToken: sessionStorage.getItem("uniIdToken"),
+							uniIdToken: sessionStorage.getItem("tempToken"),
 							url: '/sys/bindPermission',
 							roleID: _this.roleID,
 							permissionList: _this.permissionList
@@ -78,7 +79,7 @@
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
-							uniIdToken: sessionStorage.getItem("uniIdToken"),
+							uniIdToken: sessionStorage.getItem("tempToken"),
 							url: '/sys/bindRole',
 							userId: _this.userId,
 							roleList: _this.roleList
@@ -99,7 +100,7 @@
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
-							uniIdToken: sessionStorage.getItem("uniIdToken"),
+							uniIdToken: sessionStorage.getItem("tempToken"),
 							url: '/sys/addPermission',
 							permissionID: _this.permissionID,
 							permissionName: _this.permissionName,
@@ -121,7 +122,7 @@
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
-							uniIdToken: sessionStorage.getItem("uniIdToken"),
+							uniIdToken: sessionStorage.getItem("tempToken"),
 							url: '/sys/addRole',
 							roleID: _this.roleID,
 							roleName: _this.roleName,
@@ -151,7 +152,7 @@
 					})
 					.then(res => {
 						console.log("res:", res)
-						sessionStorage.setItem("uniIdToken", res.result.token)
+						sessionStorage.setItem("tempToken", res.result.token)
 						uni.showToast({
 							title: JSON.stringify(res.result.msg),
 							duration: 5000
@@ -172,7 +173,7 @@
 					})
 					.then(res => {
 						console.log("res:", res)
-						// sessionStorage.setItem("uniIdToken", res.result.token)
+						sessionStorage.setItem("tempToken", res.result.token)
 						uni.showToast({
 							title: JSON.stringify(res.result.msg),
 							duration: 5000
@@ -186,8 +187,27 @@
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
-							uniIdToken: sessionStorage.getItem("uniIdToken"),
-							url: '/sys/getLogList'
+							uniIdToken: sessionStorage.getItem("tempToken"),
+							url: '/login/getLogList'
+						}
+					})
+					.then(res => {
+						console.log("res:", res)
+						uni.showToast({
+							title: JSON.stringify(res.result.msg),
+							duration: 5000
+						});
+					}, err => {
+						console.log("错误了！！！", err)
+					});
+			},
+			getSysLoginCommonMethod() {
+				let _this = this
+				uniCloud.callFunction({
+						name: 'server',
+						data: {
+							uniIdToken: sessionStorage.getItem("tempToken"),
+							url: '/sys/getSysList'
 						}
 					})
 					.then(res => {
@@ -223,7 +243,7 @@
 				uniCloud.callFunction({
 						name: 'server',
 						data: {
-							uniIdToken: sessionStorage.getItem("uniIdToken"),
+							uniIdToken: sessionStorage.getItem("tempToken"),
 							url: '/sys/getAuthList'
 						}
 					})
